@@ -22,11 +22,11 @@ module DiscourseApi
           .default(type: 'avatar', synchronous: true)
           .to_h
         upload_response = post("/uploads", args)
-        put("/users/#{username}/preferences/avatar/pick", upload_id: upload_response['id'])
+        put("/u/#{username}/preferences/avatar/pick", upload_id: upload_response['id'])
       end
 
       def update_email(username, email)
-        put("/users/#{username}/preferences/email", email: email)
+        put("/u/#{username}/preferences/email", email: email)
       end
 
       def update_user(username, args)
