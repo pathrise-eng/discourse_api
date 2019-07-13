@@ -104,6 +104,10 @@ module DiscourseApi
       def deactivate(user_id)
         put("/admin/users/#{user_id}/deactivate")
       end
+
+      def anonymize(user_id)
+        put("/admin/users/#{user_id}/anonymize")
+      end
     end
   end
 end
