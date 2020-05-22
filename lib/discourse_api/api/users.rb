@@ -31,7 +31,8 @@ module DiscourseApi
 
       def update_user(username, args)
         args = API.params(args)
-          .optional(:name, :title, :bio_raw, :location, :website, :profile_background, :card_background)
+          .optional(:name, :title, :bio_raw, :location, :website, :profile_background, :card_background,
+                    :email_messages_level, :mailing_list_mode, :homepage_id, :theme_ids, :user_fields)
           .to_h
         put("/u/#{username}", args)
       end
@@ -77,6 +78,15 @@ module DiscourseApi
       def revoke_admin(user_id)
         response = put("admin/users/#{user_id}/revoke_admin")
         response[:body]
+      end
+
+      def grant_moderation(user_id)
+        response = put("admin/users/#{user_id}/grant_moderation")
+        response[:body]
+      end
+
+      def revoke_moderation(user_id)
+        put("admin/users/#{user_id}/revoke_moderation")
       end
 
       def by_external_id(external_id)

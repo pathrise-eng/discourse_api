@@ -18,6 +18,7 @@ module DiscourseApi
                             :flair_bg_color,
                             :flair_color,
                             :bio_raw,
+                            :members_visibility_level,
                             :public_admission,
                             :public_exit,
                             :allow_membership_requests,
@@ -46,6 +47,7 @@ module DiscourseApi
                             :flair_bg_color,
                             :flair_color,
                             :bio_raw,
+                            :members_visibility_level,
                             :public_admission,
                             :public_exit,
                             :allow_membership_requests,
@@ -107,17 +109,22 @@ module DiscourseApi
       end
 
       def group_members(group_name, params = {})
+        options = params
         params = API.params(params)
           .optional(:offset, :limit)
           .default(offset: 0, limit: 100)
           .to_h
         response = get("/groups/#{group_name}/members.json", params)
-        response.body['members']
+
+        if options[:all] == true
+          response.body
+        else
+          response.body['members']
+        end
       end
 
       def group_set_user_notification_level(group, user_id, notification_level)
-        response = post("/groups/#{group}/notifications?user_id=#{user_id}&notification_level=#{notification_level}")
-        response
+        post("/groups/#{group}/notifications?user_id=#{user_id}&notification_level=#{notification_level}")
       end
     end
   end

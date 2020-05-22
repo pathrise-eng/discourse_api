@@ -46,7 +46,7 @@ module DiscourseApi
         params = API.params(params)
           .required(:status, :enabled)
           .optional(:api_username)
-        put("/t/#{topic_slug}/#{topic_id}/status", params.to_h)
+        put("/t/#{topic_id}/status", params.to_h)
       end
 
       def topic(id, params = {})
@@ -64,14 +64,12 @@ module DiscourseApi
       end
 
       def topic_posts(topic_id, post_ids = [])
-        url = "/t/#{topic_id}/posts.json"
+        url = ["/t/#{topic_id}/posts.json"]
         if post_ids.count > 0
-          url << '?'
-          post_ids.each do |id|
-            url << "post_ids[]=#{id}&"
-          end
+          url.push('?')
+          url.push(post_ids.map { |id| "post_ids[]=#{id}" }.join('&'))
         end
-        response = get(url)
+        response = get(url.join)
         response[:body]
       end
     end

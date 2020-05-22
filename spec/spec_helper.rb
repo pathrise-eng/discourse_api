@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'simplecov'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
@@ -18,7 +19,11 @@ RSpec.configure do |config|
   end
 end
 
-WebMock.disable_net_connect!(:allow_localhost => true)
+WebMock.disable_net_connect!(allow_localhost: true)
+
+def host
+  'http://localhost:3000'
+end
 
 def a_delete(path)
   a_request(:delete, path)
