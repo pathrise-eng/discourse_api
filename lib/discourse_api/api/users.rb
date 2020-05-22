@@ -125,6 +125,11 @@ module DiscourseApi
           .to_h
         post("/session/forgot_password",args)
       end
+
+      def by_id(id)
+        response = get("/admin/users/#{id}.json")
+        response[:body]
+      end
     end
   end
 end
