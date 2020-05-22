@@ -118,6 +118,13 @@ module DiscourseApi
       def anonymize(user_id)
         put("/admin/users/#{user_id}/anonymize")
       end
+
+      def send_password_reset_email(args)
+        args = API.params(args)
+          .optional(:login)
+          .to_h
+        post("/session/forgot_password",args)
+      end
     end
   end
 end
